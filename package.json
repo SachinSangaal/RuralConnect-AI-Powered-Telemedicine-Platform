@@ -1,24 +1,46 @@
 {
+  "name": "mysql",
+  "description": "A node.js driver for mysql. It is written in JavaScript, does not require compiling, and is 100% MIT licensed.",
+  "version": "2.18.1",
+  "license": "MIT",
+  "author": "Felix Geisendörfer <felix@debuggable.com> (http://debuggable.com/)",
+  "contributors": [
+    "Andrey Sidorov <sidorares@yandex.ru>",
+    "Bradley Grainger <bgrainger@gmail.com>",
+    "Douglas Christopher Wilson <doug@somethingdoug.com>",
+    "Diogo Resende <dresende@thinkdigital.pt>",
+    "Nathan Woltman <nwoltman@outlook.com>"
+  ],
+  "repository": "mysqljs/mysql",
   "dependencies": {
-    "@google-cloud/speech": "^6.0.2",
-    "@google-cloud/translate": "^8.0.2",
-    "axios": "^1.5.0",
-    "body-parser": "^1.20.2",
-    "ejs": "^3.1.9",
-    "express": "^4.18.2",
-    "mysql": "^2.18.1",
-    "mysql2": "^3.6.1",
-    "node-google-translate-skidz": "^1.1.1",
-    "twilio": "^4.18.0"
+    "bignumber.js": "9.0.0",
+    "readable-stream": "2.3.7",
+    "safe-buffer": "5.1.2",
+    "sqlstring": "2.3.1"
   },
-  "name": "nodejs",
-  "version": "1.0.0",
-  "main": "index.js",
+  "devDependencies": {
+    "after": "0.8.2",
+    "eslint": "5.16.0",
+    "seedrandom": "3.0.5",
+    "timezone-mock": "0.0.7",
+    "urun": "0.0.8",
+    "utest": "0.0.8"
+  },
+  "files": [
+    "lib/",
+    "Changes.md",
+    "License",
+    "Readme.md",
+    "index.js"
+  ],
+  "engines": {
+    "node": ">= 0.6"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": ""
+    "lint": "eslint . && node tool/lint-readme.js",
+    "test": "node test/run.js",
+    "test-ci": "node tool/install-nyc.js --nyc-optional --reporter=text -- npm test",
+    "test-cov": "node tool/install-nyc.js --reporter=html --reporter=text -- npm test",
+    "version": "node tool/version-changes.js && git add Changes.md"
+  }
 }
