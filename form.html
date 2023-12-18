@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- ... (your HTML head content) ... -->
+</head>
+<body>
+  <!-- The <div> tag with data you want to send -->
+  <div id="myDiv">
+    Data in the div tag.
+  </div>
+
+  <button id="sendButton">Send Data</button>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Get the <div> element by its ID
+      const myDiv = document.getElementById('myDiv');
+
+      // Get the data from the <div> element
+      const divData = myDiv.textContent;
+
+      // Add an event listener to the button
+      const sendButton = document.getElementById('sendButton');
+      sendButton.addEventListener('click', function () {
+        // Send the data to the Express.js server
+        fetch('/receiveData', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'text/plain', // You can use 'application/json' if needed
+          },
+          body: divData,
+        })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log('Response from server:', data);
+        })
+        .catch((error) => {
+          console.error('Error sending data to server:', error);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
+

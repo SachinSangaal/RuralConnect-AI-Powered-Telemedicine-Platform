@@ -1,0 +1,47 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client</title>
+</head>
+<body>
+    <div id="dataToServer">
+        Fever and Cough.
+    </div>
+    <button id="sendDataButton">Send Data</button>
+    
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const sendDataButton = document.getElementById('sendDataButton');
+            const dataToServer = document.getElementById('dataToServer');
+            const data = localStorage.getItem('textData');
+            dataToServer.innerHTML=data;
+
+            sendDataButton.addEventListener('click', function () {
+                const data = dataToServer.textContent;
+
+                fetch('/sendData', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'text/plain',
+                    },
+                    body: data,
+                })
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log('Response from server:', data);
+                })
+                .catch((error) => {
+                    console.error('Error sending data to server:', error);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+<button id="translateBtn"> <a href="form1.html">Translate it</a></button>
+
+

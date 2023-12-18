@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <div class="video-container">
+    <video autoplay muted id="background-video">
+        <source src="videos/video.mp4" type="video/mp4">
+        <!-- You can add multiple source elements for different video formats -->
+    </video>
+   
+    
+    <div class="centered-content">
+      <button id="startSpeechRecognition">Start Speaking</button>
+        <div id="recognizedText"></div>
+        <!-- Add a "Translate" button -->
+        <button id="translateButton">Translate</button>
+    </div>
+</div>
+  <script>
+
+document.addEventListener("DOMContentLoaded", function () {
+    var video = document.getElementById("background-video");
+
+    // Function to loop the video
+    function loopVideo() {
+        video.currentTime = 0; // Reset video to the beginning
+        video.play();
+    }
+
+    // Listen for the 'ended' event and call the loopVideo function
+    video.addEventListener("ended", loopVideo);
+
+    // Initial video play
+    video.play();
+});
+
+    const startSpeechRecognitionButton = document.getElementById('startSpeechRecognition');
+    const recognizedTextDiv = document.getElementById('recognizedText');
+    const translateButton = document.getElementById('translateButton'); // Get the "Translate" button
+
+    if ('webkitSpeechRecognition' in window) {
+      const recognition = new webkitSpeechRecognition();
+
+      recognition.lang = 'te-IN';
+
+      recognition.onresult = function(event) {
+        const transcript = event.results[0][0].transcript;
+        console.log('Recognized Text (Telugu):', transcript);
+
+        recognizedTextDiv.textContent = `${transcript}`;
+      };
+
+      recognition.onend = function() {
+        console.log('Speech recognition ended.');
+      };
+
+      recognition.onerror = function(event) {
+        console.error('Speech recognition error:', event.error);
+      };
+
+      startSpeechRecognitionButton.addEventListener('click', function() {
+        recognition.start();
+      });
+
+      // Add a click event listener to the "Translate" button
+      translateButton.addEventListener('click', function() {
+        // Pass the recognized text as a parameter to the second snippet
+        const recognizedText = recognizedTextDiv.textContent;
+        localStorage.setItem('text',recognizedText);
+       // window.open('display.html','_blank');
+       window.location.href = 'display.html';
+      });
+
+    } else {
+      console.log('Web Speech API is not supported in this browser.');
+    }
+ 
+  </script>
+</body>
+
+</html>

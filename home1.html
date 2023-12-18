@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Speech Recognition Example</title>
+  
+</head>
+<body>
+ 
+  <div id="output"></div>
+  <button id="startSpeechRecognition">Start Speaking</button>
+
+  <script>
+
+    
+document.addEventListener("DOMContentLoaded", function () {
+    var video = document.getElementById("background-video");
+
+    // Function to loop the video
+    function loopVideo() {
+        video.currentTime = 0; // Reset video to the beginning
+        video.play();
+    }
+
+    // Listen for the 'ended' event and call the loopVideo function
+    video.addEventListener("ended", loopVideo);
+
+    // Initial video play
+    video.play();
+});
+    const outputDiv = document.getElementById('output');
+    const startSpeechRecognitionButton = document.getElementById('startSpeechRecognition');
+    const recognition = new webkitSpeechRecognition();
+    let inputCount = 0;
+    let str="";
+    recognition.lang = 'te-IN'; // Set the recognition language to Telugu (change as needed)
+
+    recognition.onresult = function(event) {
+      const transcript = event.results[0][0].transcript;
+      outputDiv.innerHTML += `<p>You said: ${transcript}</p>`;
+      speakText('Emaina inkaaa vivarin chagalaraaa sir?');
+      str=str+transcript+" ";
+      console.log(str);
+      inputCount++;
+
+      if (inputCount >= 2) {
+        recognition.stop();
+        speakText('Thank you for providing your input.');
+      }
+    };
+    recognition.onend = function() {
+      if (inputCount < 2) {
+        setTimeout(() => {
+          recognition.start();
+        }, 2000); // Wait for 2 seconds before starting to listen again
+      }
+      else {
+      // When the speech recognition process ends (inputCount reaches 2), send the string to the server
+      sendTextToServer(str);
+    }
+    };
+
+    recognition.onerror = function(event) {
+      console.error('Speech recognition error:', event.error);
+    };
+
+    function speakText(text) {
+      const speechSynthesis = window.speechSynthesis;
+      const utterance = new SpeechSynthesisUtterance(text);
+      speechSynthesis.speak(utterance);
+    }
+
+    function startListening() {
+      inputCount = 0;
+      recognition.start();
+    }
+    function sendTextToServer(text) {
+    console.log('Sending text to server:', text);
+    fetch('/save-spoken-text', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ text: text }),
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log('Spoken text sent to the server successfully');
+          // Redirect to a success page or perform any other action here if needed
+        } else {
+          console.error('Error sending spoken text to the server');
+          // Handle the error, e.g., show an error message to the user
+        }
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        // Handle the error, e.g., show an error message to the user
+      });
+  }
+    startSpeechRecognitionButton.addEventListener('click', function() {
+      outputDiv.innerHTML = '<p>Namaskaram</p>';
+      speakText('Namaskaram. Mee Samaysya entoo vivarinchandi sir.');
+      setTimeout(() => {
+        startListening();
+      }, 2000); // Wait for 2 seconds before starting to listen
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Data from MySQL</title>
+  <style>
+    /* Reset some default styles */
+/* Add hover effect to list items */
+li:hover {
+  background-color: #f0f0f0;
+  transform: scale(1.02);
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+/* Center the list in the middle of the page */
+ul {
+  list-style: none;
+  margin: 20px auto;
+  padding: 0;
+  width: 80%;
+  text-align: center;
+}
+
+/* Add a subtle box shadow to the header */
+h1 {
+  background-color: #007bff;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Style the list items with alternating background colors */
+li:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+/* Add a border to the list items */
+li {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+/* Style the item names with a larger font size */
+h2 {
+  margin: 0;
+  color: #333;
+  font-size: 18px;
+}
+
+/* Style the list items with a subtle animation */
+li {
+  transition: transform 0.2s ease-in-out;
+}
+
+/* Center the item names horizontally */
+h2 {
+  text-align: center;
+}
+
+/* Add spacing between the list items */
+li + li {
+  margin-top: 15px;
+}
+
+  </style>
+</head>
+<body>
+  <h1>Prescribed doctor</h1>
+  <ul>
+    <% dataFromDB.forEach((item) => { %>
+      <li><h2><%= item.name %></h2></li> <!-- Replace 'columnName' with your actual column name -->
+      <li><h2>Anirudh</h2></li> 
+      <li><h2>For more details contact- 6987623497</h2></li> 
+    <% }); %>
+    
+  </ul>
+
+
+
+
+
+
+</body>
+</html>
