@@ -21,11 +21,9 @@ This project is a web application designed to offer telemedicine services in rur
    - Converts spoken Telugu into text.
    - Translates the text from Telugu to English.
 
-4. **AI-Based Disease Evaluation:**
-   - The AI model processes the translated text to evaluate symptoms.
-   - Checks for disease-related keywords in the translated text.
-   - Matches identified diseases with a database of doctors to find the best-fit doctor for the patient.
-
+4. **Data Processing and Doctor Recommendation**
+   - Checks for disease-related keywords and matches them with a database of doctors to find the most suitable doctor for the patient.
+  
 5. **Doctor Recommendation:**
    - Recommends suitable doctors from the database based on the evaluated disease and the doctors' specialties.
 
