@@ -1,4 +1,4 @@
-# AI-Assisted Telemedicine Kiosk for Rural India
+# AI-Assisted Telemedicine Kiosk for Rural India(Team of 3)
 
 ## Project Overview
 
